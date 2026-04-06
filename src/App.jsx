@@ -22,6 +22,14 @@ export default function App() {
       })
     })
   }
+
+  function handleDelete(itemId) {
+    setItemlist(function(prevItems) {
+      return prevItems.filter(function(item) {
+        return item.id !== itemId;
+      })
+    })
+  }
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -39,7 +47,9 @@ export default function App() {
             <button type="button" onClick={() => handleClick(item.id)}>
                 {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
             </button>
-            {item.name}
+            <span>{item.name}</span>
+            {item.isStarred && <span>FAV</span>}
+            <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
           </li>
       )}
       </ul>
