@@ -1,19 +1,21 @@
-const itemList = [
+import { nanoid } from "nanoid";
+
+const initialItemList = [
         {
-            id: 1,
+            id: nanoid(),
             name: "item 1",
             isStarred: false
         },
         {
-            id: 2,
+            id: nanoid(),
             name: "item 2",
             isStarred: false
         },
         {
-            id: 3,
+            id: nanoid(),
             name: "item 3",
             isStarred: false
         }
 ]
 
-export default itemList;
+export default initialItemList;
