@@ -15,6 +15,13 @@ export default function App() {
     e.target.reset();
   }
 
+  function handleClick(itemId) {
+    setItemlist(function(prevItems) {
+       return prevItems.map(function(item) {
+        return item.id === itemId ? {...item, isStarred: !item.isStarred} : item;
+      })
+    })
+  }
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -26,7 +33,15 @@ export default function App() {
       </form>
       <h1>My Favourites List</h1>
       <ul>
-        {itemList.map(item => <li key={item.id}>{item.name}</li>)}
+        {itemList.map(item => 
+          
+          <li key={item.id}>
+            <button type="button" onClick={() => handleClick(item.id)}>
+                {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+            </button>
+            {item.name}
+          </li>
+      )}
       </ul>
     </div>
   )
