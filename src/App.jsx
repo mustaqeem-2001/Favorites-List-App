@@ -32,14 +32,23 @@ export default function App() {
   }
   return (
     <div>
+      <h1>My Favourites</h1>
+      <p>Add items and mark your favorites</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="inputItem">
+        <label htmlFor="inputItem" className="sr-only">
           Add Item: 
-          <input type="text" name="inputItem" id="inputItem"/>
         </label>
+        <input type="text" name="inputItem" id="inputItem" placeholder="Type an item (e.g. Inception)..."/>
         <button type="submit">+ Add</button>
       </form>
-      <h1>My Favourites List</h1>
+      <div>
+        <div>{itemList.length} Total</div>
+        <div>
+          {itemList.filter(function(item) {
+            return item.isStarred;
+          }).length} Favourites
+        </div>
+      </div>
       <ul>
         {itemList.map(item => 
           
