@@ -1,6 +1,8 @@
 import { nanoid } from "nanoid";
 import initialItemList from "./data/initialItemList.js";
 import { useState, useRef, useEffect } from "react";
+import "./App.css";
+
 export default function App() {  
   const [itemList, setItemlist] = useState(initialItemList);
   const totalBtnRef = useRef(null);
@@ -44,9 +46,15 @@ export default function App() {
   useEffect(() => totalBtnRef.current.click(), []);
 
   return (
-    <div>
+    <>
+    <header className="header">
+      <div className="header-heart">
+        <i className="fa-solid fa-heart"></i>
+      </div>
       <h1>My Favourites</h1>
-      <p>Add items and mark your favorites</p>
+      <p className="header-p">Add items and mark your favorites</p>
+    </header>
+    <main className="main">
       <form onSubmit={handleSubmit}>
         <label htmlFor="inputItem" className="sr-only">
           Add Item: 
@@ -111,6 +119,12 @@ export default function App() {
             </ul>
           )
         }
-    </div>
+      </main>
+      <footer className="footer">
+        <p>
+          &copy; {new Date().getFullYear()} YourName. All rights reserved.
+        </p>
+      </footer>
+    </>
   )
 }
