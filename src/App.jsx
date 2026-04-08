@@ -1,8 +1,12 @@
 import { nanoid } from "nanoid";
 import initialItemList from "./data/initialItemList.js";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 export default function App() {  
   const [itemList, setItemlist] = useState(initialItemList);
+  const totalBtnRef = useRef(null);
+  const [isActive, setIsActive] = useState("");
+  const starredItems = itemList.filter(item => item.isStarred)
+  const noStarredItems = itemList.filter(item => !item.isStarred);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,6 +34,15 @@ export default function App() {
       })
     })
   }
+
+  function getBtnStyles(name, colour) {
+    return {
+      backgroundColor: isActive === name ? colour : "gray"
+    }
+  }
+
+  useEffect(() => totalBtnRef.current.click(), []);
+
   return (
     <div>
       <h1>My Favourites</h1>
@@ -42,26 +55,62 @@ export default function App() {
         <button type="submit">+ Add</button>
       </form>
       <div>
-        <div>{itemList.length} Total</div>
-        <div>
+        <button ref={totalBtnRef} onClick={() => setIsActive("total")} style={getBtnStyles("total", "green")}>{itemList.length} Total</button>
+        <button style={getBtnStyles("fav", "blue")} onClick={() => setIsActive("fav")}>
           {itemList.filter(function(item) {
             return item.isStarred;
           }).length} Favourites
-        </div>
+        </button>
       </div>
-      <ul>
-        {itemList.map(item => 
-          
-          <li key={item.id}>
-            <button type="button" onClick={() => handleClick(item.id)}>
-                {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
-            </button>
-            <span>{item.name}</span>
-            {item.isStarred && <span>FAV</span>}
-            <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
-          </li>
-      )}
-      </ul>
+        { isActive === "fav" ?
+          (
+            <>
+              <ul>
+                {
+                  starredItems.map(item => 
+                    <li key={item.id}>
+                      <button type="button" onClick={() => handleClick(item.id)}>
+                          {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                      </button>
+                      <span>{item.name}</span>
+                      {item.isStarred && <span>FAV</span>}
+                      <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
+                    </li>
+                  )
+                }
+              </ul>
+              <p>ALL ITEMS</p>
+              <ul>
+                {
+                  noStarredItems.map(item => 
+                    <li key={item.id}>
+                      <button type="button" onClick={() => handleClick(item.id)}>
+                          {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                      </button>
+                      <span>{item.name}</span>
+                      {item.isStarred && <span>FAV</span>}
+                      <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
+                    </li>
+                  )
+                }
+              </ul>
+            </>
+          ) : 
+          (
+            <ul>
+              {itemList.map(item => 
+                <li key={item.id}>
+                  <button type="button" onClick={() => handleClick(item.id)}>
+                      {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                  </button>
+                  <span>{item.name}</span>
+                  {item.isStarred && <span>FAV</span>}
+                  <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
+                </li>
+              )}
+            </ul>
+          )
+        }
     </div>
   )
 }
