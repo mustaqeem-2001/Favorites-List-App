@@ -34,7 +34,7 @@ body {
 }
 .fa-heart {
     background-color: #7f22fe;
-    color: white;
+    color: #fff;
 }
 
 h1 {
@@ -44,11 +44,68 @@ h1 {
 
 .header-p {
     font-size: .85rem;
+    color: #a6a6a6;
 }
 
 
 /* Main */
 
-input {
+form {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+form > input {
+    padding: .9rem;
+    border-radius: 12px;
+    border: 2px solid #E8E8F7;
+    flex-grow: 1;
+}
 
+.sr-only {
+    display: none;
+}
+
+form > button {
+    padding: .75rem 1.25rem;
+    border-radius: 12px;
+    color: #ededede0;
+    background-color: #7f22fe;
+    border: 2px solid #E8E8F7;
+    white-space: nowrap;
+    flex-shrink: 1;
+}
+
+.button-group {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+.toggle-btn {
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    border: 2px solid #E8E8F7;
+    white-space: wrap;
+}
+
+.count, .label {
+    display: block;
+}
+
+.toggle-btn .count {
+    margin-bottom: .5rem;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #101828;
+}
+
+.toggle-btn.active .count {
+    color: #fff;
 }

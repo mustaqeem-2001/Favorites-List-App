@@ -37,9 +37,10 @@ export default function App() {
     })
   }
 
-  function getBtnStyles(name, colour) {
+  function getBtnStyles(name) {
     return {
-      backgroundColor: isActive === name ? colour : "gray"
+      backgroundColor: isActive === name ? "#7f22fe" : "#fff",
+      color: isActive === name ? "#fff" : "#868686"
     }
   }
 
@@ -60,14 +61,22 @@ export default function App() {
           Add Item: 
         </label>
         <input type="text" name="inputItem" id="inputItem" placeholder="Type an item (e.g. Inception)..."/>
-        <button type="submit">+ Add</button>
+        <button type="submit">+ Add </button>
       </form>
-      <div>
-        <button ref={totalBtnRef} onClick={() => setIsActive("total")} style={getBtnStyles("total", "green")}>{itemList.length} Total</button>
-        <button style={getBtnStyles("fav", "blue")} onClick={() => setIsActive("fav")}>
-          {itemList.filter(function(item) {
-            return item.isStarred;
-          }).length} Favourites
+      <div className="button-group">
+        <button className={`toggle-btn ${isActive === "total" ? "active" : ""}`} ref={totalBtnRef} 
+                onClick={() => setIsActive("total")} 
+                style={getBtnStyles("total")}>
+          <span className="count">{itemList.length}</span> 
+          <span className="label">Total</span>
+        </button>
+        <button className={`toggle-btn ${isActive === "fav" ? "active" : ""}`} style={getBtnStyles("fav")} onClick={() => setIsActive("fav")}>
+          <span className="count">
+            {itemList.filter(function(item) {
+              return item.isStarred;
+            }).length} 
+          </span>
+          <span className="label">Favourites</span>
         </button>
       </div>
         { isActive === "fav" ?
