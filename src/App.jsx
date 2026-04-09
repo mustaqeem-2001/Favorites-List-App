@@ -37,9 +37,10 @@ export default function App() {
     })
   }
 
-  function getBtnStyles(name, colour) {
+  function getBtnStyles(name) {
     return {
-      backgroundColor: isActive === name ? colour : "gray"
+      backgroundColor: isActive === name ? "#7f22fe" : "#fff",
+      color: isActive === name ? "#fff" : "#868686"
     }
   }
 
@@ -60,70 +61,98 @@ export default function App() {
           Add Item: 
         </label>
         <input type="text" name="inputItem" id="inputItem" placeholder="Type an item (e.g. Inception)..."/>
-        <button type="submit">+ Add</button>
+        <button type="submit">+ Add </button>
       </form>
-      <div>
-        <button ref={totalBtnRef} onClick={() => setIsActive("total")} style={getBtnStyles("total", "green")}>{itemList.length} Total</button>
-        <button style={getBtnStyles("fav", "blue")} onClick={() => setIsActive("fav")}>
-          {itemList.filter(function(item) {
-            return item.isStarred;
-          }).length} Favourites
+      <div className="button-group">
+        <button className={`toggle-btn ${isActive === "total" ? "active" : ""}`} ref={totalBtnRef} 
+                onClick={() => setIsActive("total")} 
+                style={getBtnStyles("total")}>
+          <span className="count">{itemList.length}</span> 
+          <span className="label">Total</span>
+        </button>
+        <button className={`toggle-btn ${isActive === "fav" ? "active" : ""}`} style={getBtnStyles("fav")} onClick={() => setIsActive("fav")}>
+          <span className="count">
+            {itemList.filter(function(item) {
+              return item.isStarred;
+            }).length} 
+          </span>
+          <span className="label">Favourites</span>
         </button>
       </div>
         { isActive === "fav" ?
           (
             <>
+              <p className="fc-p">STARRED</p>
               <ul>
                 {
                   starredItems.map(item => 
-                    <li key={item.id}>
-                      <button type="button" onClick={() => handleClick(item.id)}>
-                          {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                   <li key={item.id} className="item-starred">
+                    <div className="flex-gap">
+                      <button className="star-icon star-icon-active" type="button" onClick={() => handleClick(item.id)}>
+                        <i className="fa-solid fa-star"></i>
                       </button>
-                      <span>{item.name}</span>
-                      {item.isStarred && <span>FAV</span>}
+                      <span  className="item-starred-name">{item.name}</span>
+                    </div>
+                    
+                    <div className="flex-gap">
+                        {item.isStarred && <span className="item-fav">FAV</span>}
                       <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
-                    </li>
+                    </div>
+                  </li>
                   )
                 }
               </ul>
-              <p>ALL ITEMS</p>
+              <p className="fc-p">ALL ITEMS</p>
               <ul>
                 {
                   noStarredItems.map(item => 
-                    <li key={item.id}>
-                      <button type="button" onClick={() => handleClick(item.id)}>
-                          {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                    <li key={item.id} className={`${item.isStarred ? "item-starred" : ""}`}>
+                    <div className="flex-gap">
+                      <button className="star-icon" type="button" onClick={() => handleClick(item.id)}>
+                        <i className="fa-regular fa-star"></i>
                       </button>
-                      <span>{item.name}</span>
-                      {item.isStarred && <span>FAV</span>}
+                      <span  className={`${item.isStarred ? "item-starred-name" : ""}`}>{item.name}</span>
+                    </div>
+                    
+                    <div className="flex-gap">
+                        {item.isStarred && <span className="item-fav">FAV</span>}
                       <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
-                    </li>
+                    </div>
+                  </li>
                   )
                 }
               </ul>
             </>
           ) : 
           (
-            <ul>
-              {itemList.map(item => 
-                <li key={item.id}>
-                  <button type="button" onClick={() => handleClick(item.id)}>
-                      {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
-                  </button>
-                  <span>{item.name}</span>
-                  {item.isStarred && <span>FAV</span>}
-                  <button type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
-                </li>
-              )}
-            </ul>
+            <>
+              <p className="fc-p">ALL ITEMS</p>
+              <ul>
+                {itemList.map(item => 
+                  <li key={item.id} className={`${item.isStarred ? "item-starred" : ""}`}>
+                    <div className="flex-gap">
+                      <button className={`star-icon ${item.isStarred ? "star-icon-active" : ""}`} type="button" onClick={() => handleClick(item.id)}>
+                        {item.isStarred ? <i className="fa-solid fa-star"></i> : <i className="fa-regular fa-star"></i>}
+                      </button>
+                      <span  className={`${item.isStarred ? "item-starred-name" : ""}`}>{item.name}</span>
+                    </div>
+                    
+                    <div className="flex-gap">
+                        {item.isStarred && <span className="item-fav">FAV</span>}
+                      <button className="bin-icon" type="button" onClick={() => handleDelete(item.id)}><i className="fa-solid fa-trash-can"></i></button>
+                    </div>
+                  </li>
+                )}
+              </ul>
+            </>
           )
         }
       </main>
       <footer className="footer">
         <p>
-          &copy; {new Date().getFullYear()} YourName. All rights reserved.
+          &copy; {new Date().getFullYear()} Mustaqeem Chowdhury. 
         </p>
+        <span className="footer-span">All rights reserved.</span>
       </footer>
     </>
   )
