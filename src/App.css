@@ -129,6 +129,27 @@ form > button {
     margin: 1.5rem 0;
 }
 
+/* Search feature */
+.search-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid #a6a6a6;
+    padding-left: 1rem;
+    overflow: hidden;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 1rem;
+    border: none;
+}
+
+
+
+/* Item list */
+
 li {
     list-style: none;
     padding: 2rem 1rem;
@@ -198,4 +219,8 @@ footer {
     padding: 2.5rem 0;
     white-space: nowrap;
 }
+
+
+/* Media queries */
+
 
